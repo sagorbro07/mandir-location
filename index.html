@@ -56,9 +56,6 @@ a{text-decoration:none;color:inherit}
 @media(prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
 
-  /* Without this reset, every element that starts at opacity:0 and relies on
-     the fadeUp/ringIn animation to become visible would stay invisible
-     forever on devices with Reduce Motion enabled (this was the bug). */
   .top-title,
   .top-title .invite-line,
   .badge-ring,
@@ -86,13 +83,14 @@ a{text-decoration:none;color:inherit}
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg, rgba(77,16,20,.72), rgba(116,25,29,.82));
+  background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
   pointer-events:none;
 }
 
-.top-row, .actions{
+.top-row, .actions, .header-highlights{
   position:relative;
   z-index:1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
 }
 
 .top-motif{
@@ -101,7 +99,7 @@ a{text-decoration:none;color:inherit}
   top:-34px;
   width:190px;
   height:190px;
-  opacity:.12;
+  opacity:.06;
   color:var(--gold);
   pointer-events:none;
 }
@@ -129,11 +127,16 @@ a{text-decoration:none;color:inherit}
 .top-title{
   font-family:"Tiro Bangla",serif;
   font-weight:700;
-  font-size:clamp(26px,8vw,36px);
-  line-height:1.18;
+  font-size:clamp(32px,11vw,42px);
+  line-height:1.1;
   letter-spacing:-.01em;
   opacity:0;
   animation:fadeUp .6s ease .05s both;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 18px 20px;
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  border-left: 4px solid var(--gold);
 }
 
 .top-title small{
@@ -141,20 +144,20 @@ a{text-decoration:none;color:inherit}
   font-family:"Tiro Bangla",serif;
   font-style:italic;
   font-weight:400;
-  font-size:14px;
-  color:rgba(247,239,217,.65);
-  margin-top:6px;
+  font-size:18px;
+  color:var(--gold);
+  margin-top:8px;
   letter-spacing:0;
 }
 
 .top-title p.invite-line{
   font-family:"Hind Siliguri",sans-serif;
-  font-weight:400;
-  font-size:13px;
-  line-height:1.8;
-  color:rgba(247,239,217,.78);
-  margin-top:14px;
-  max-width:46ch;
+  font-weight:500;
+  font-size:15px;
+  line-height:1.6;
+  color:#fff;
+  margin-top:18px;
+  max-width:48ch;
   opacity:0;
   animation:fadeUp .6s ease .18s both;
 }
@@ -228,74 +231,56 @@ a{text-decoration:none;color:inherit}
 
 .action-btn .icon{width:20px;height:20px;flex-shrink:0}
 
-/* ============ HIGHLIGHTS: festive strip ============ */
+/* ============ HEADER HIGHLIGHTS ============ */
 
-.highlights{
-  display:flex;
-  gap:12px;
-  padding:22px 18px 6px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-
-.highlights::-webkit-scrollbar{display:none}
-
-.highlight{
-  flex:0 0 auto;
-  width:64%;
-  max-width:210px;
-  scroll-snap-align:start;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:10px;
-  padding:16px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
+.header-highlights{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px 12px;
+  margin-top:28px;
   opacity:0;
-  animation:fadeUp .5s ease both;
+  animation:fadeUp .6s ease .35s both;
 }
 
-.highlight:nth-child(1){animation-delay:.46s}
-.highlight:nth-child(2){animation-delay:.53s}
-.highlight:nth-child(3){animation-delay:.6s}
-.highlight:nth-child(4){animation-delay:.67s}
+.h-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 10px 12px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
 
-.highlight-icon{
-  width:36px;
-  height:36px;
+.h-icon{
+  width:28px;
+  height:28px;
   border-radius:50%;
-  border:1.3px solid var(--gold);
+  border:1px solid var(--gold);
   display:flex;
   align-items:center;
   justify-content:center;
-  color:var(--maroon);
+  color:var(--gold);
   flex-shrink:0;
 }
 
-.highlight-icon svg{width:17px;height:17px}
+.h-icon svg{width:14px;height:14px}
 
-.highlight h4{
+.h-text h4{
   font-family:"Tiro Bangla",serif;
-  font-size:13.5px;
+  font-size:12px;
   font-weight:700;
-  color:var(--maroon);
+  color:var(--cream);
+  line-height:1.2;
 }
 
-.highlight p{
-  font-size:11px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.swipe-hint{
-  font-size:10.5px;
-  color:var(--muted);
-  padding:0 18px 2px;
-  opacity:.75;
+.h-text p{
+  font-size:9.5px;
+  color:rgba(247,239,217,.7);
+  line-height:1.3;
 }
 
 /* ============ FIND YOUR DISTANCE ============ */
@@ -325,7 +310,7 @@ a{text-decoration:none;color:inherit}
   top:0;
   background:var(--cream);
   padding:2px 0 10px;
-  z-index:5;
+  z-index:10;
 }
 
 .search{
@@ -352,6 +337,35 @@ a{text-decoration:none;color:inherit}
   color:var(--muted);
   margin-top:6px;
 }
+
+/* ============ PRIMARY POINT BOX ============ */
+
+.primary-point{
+  margin: 10px 18px 20px;
+  padding: 16px;
+  background: #fff;
+  border-left: 4px solid var(--maroon);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.primary-point h3{
+  font-family: "Tiro Bangla", serif;
+  font-size: 16px;
+  color: var(--maroon);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.primary-point p{
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* ============ RESULTS & ROWS ============ */
 
 .results{
   padding:4px 18px 8px;
@@ -391,17 +405,23 @@ a{text-decoration:none;color:inherit}
 
 .row{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
+  flex-direction: column;
   padding:12px 2px;
   border-bottom:1px solid var(--line);
-  transition:background-color .15s ease, padding-left .15s ease;
+  transition:background-color .15s ease;
+  cursor: pointer;
 }
 
 .row:hover{
   background:rgba(199,155,59,.07);
-  padding-left:6px;
+}
+
+.row-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .row .place{
@@ -422,6 +442,37 @@ a{text-decoration:none;color:inherit}
   font-size:13px;
   color:var(--maroon);
   white-space:nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row .km::after{
+  content: "↓";
+  font-size: 16px;
+  transition: transform 0.2s;
+  opacity: 0.5;
+}
+
+.row.active .km::after{
+  transform: rotate(180deg);
+}
+
+.instruction{
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--cream);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  border-left: 2.5px solid var(--gold);
+  animation: fadeUp 0.3s ease;
+}
+
+.row.active .instruction{
+  display: block;
 }
 
 /* ============ COLLAPSIBLE: everything else ============ */
@@ -518,7 +569,7 @@ details[open] summary .plus{transform:rotate(45deg)}
 
   .swipe-hint{display:none}
 
-  .find,.results,.more,.highlights{padding-left:56px;padding-right:56px}
+  .find,.results,.more,.highlights,.primary-point{padding-left:56px;padding-right:56px}
   .find{padding-top:36px}
   .find h2{font-size:24px}
 
@@ -611,56 +662,40 @@ details[open] summary .plus{transform:rotate(45deg)}
       ম্যাপে দেখুন
     </a>
   </div>
+
+  <div class="header-highlights">
+    <div class="h-item">
+      <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 9v1h18V9L12 3Z"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+      <div class="h-text">
+        <h4>১০০ বছরের ঐতিহ্য</h4>
+        <p>১৯২৬ সাল থেকে অবিরাম পথচলা</p>
+      </div>
+    </div>
+    <div class="h-item">
+      <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M14.5 14.3c2 .3 3.5 1.9 3.5 4.7"/></svg></div>
+      <div class="h-text">
+        <h4>সম্প্রীতি আমাদের শক্তি</h4>
+        <p>একতায়, এক মনে, একটি পরিবার</p>
+      </div>
+    </div>
+    <div class="h-item">
+      <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2.5-6-5.5-6-9a6 6 0 0 1 12 0c0 3.5-2 6.5-6 9Z"/><path d="M12 12v9"/></svg></div>
+      <div class="h-text">
+        <h4>সংস্কৃতি আমাদের প্রাণ</h4>
+        <p>ঐতিহ্য ও সংস্কৃতির মিলনস্থল</p>
+      </div>
+    </div>
+    <div class="h-item">
+      <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v2.4M12 18.6V21M4.5 12H2M22 12h-2.5M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18"/></svg></div>
+      <div class="h-text">
+        <h4>আগামীর পথে</h4>
+        <p>নতুন স্বপ্ন, নতুন আশা, উজ্জ্বলতার অঙ্গীকার</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="toran"></div>
-
-<!-- HIGHLIGHTS -->
-<div class="highlights">
-
-  <div class="highlight">
-    <div class="highlight-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 9v1h18V9L12 3Z"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
-    </div>
-    <div>
-      <h4>১০০ বছরের অগাধ ঐতিহ্য</h4>
-      <p>১৯২৬ সাল থেকে অবিরাম পথচলা</p>
-    </div>
-  </div>
-
-  <div class="highlight">
-    <div class="highlight-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M14.5 14.3c2 .3 3.5 1.9 3.5 4.7"/></svg>
-    </div>
-    <div>
-      <h4>সম্প্রীতি আমাদের শক্তি</h4>
-      <p>একতায়, এক মনে, একটি পরিবার</p>
-    </div>
-  </div>
-
-  <div class="highlight">
-    <div class="highlight-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2.5-6-5.5-6-9a6 6 0 0 1 12 0c0 3.5-2 6.5-6 9Z"/><path d="M12 12v9"/></svg>
-    </div>
-    <div>
-      <h4>সংস্কৃতি আমাদের প্রাণ</h4>
-      <p>ঐতিহ্য ও সংস্কৃতির মিলনস্থল</p>
-    </div>
-  </div>
-
-  <div class="highlight">
-    <div class="highlight-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v2.4M12 18.6V21M4.5 12H2M22 12h-2.5M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18"/></svg>
-    </div>
-    <div>
-      <h4>আগামীর পথে</h4>
-      <p>নতুন স্বপ্ন, নতুন আশা, উজ্জ্বলতার অঙ্গীকার</p>
-    </div>
-  </div>
-
-</div>
-
-<div class="swipe-hint">← সোয়াইপ করে বাকিগুলো দেখুন</div>
 
 <!-- FIND DISTANCE -->
 <div class="find">
@@ -673,8 +708,14 @@ details[open] summary .plus{transform:rotate(45deg)}
   </h2>
   <div class="search-wrap">
     <input class="search" id="search" type="search" placeholder="যেমন: রংপুর, সৈয়দপুর, পার্বতীপুর..." autocomplete="off">
-    <div class="hint">উপজেলা বা বাজারের নাম লিখুন — আনুমানিক দূরত্ব দেখাবে</div>
+    <div class="hint">উপজেলা বা বাজারের নাম লিখুন — আনুমানিক দূরত্ব ও পথনির্দেশিকা দেখাবে</div>
   </div>
+</div>
+
+<!-- PRIMARY POINT: RANNIRBANDAR -->
+<div class="primary-point">
+  <h3>🚩 মূল পয়েন্ট: রানীরবন্দর থেকে মন্দিরে আগমন</h3>
+  <p>রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</p>
 </div>
 
 <div class="results" id="results">
@@ -682,52 +723,153 @@ details[open] summary .plus{transform:rotate(45deg)}
 
   <div class="zone" data-zone>
     <div class="zone-head"><h3>০–৩০ কিমি</h3><span>নিকটবর্তী</span></div>
-    <div class="row" data-row><div><div class="place">চিরিরবন্দর</div><div class="market">চিরিরবন্দর বাজার</div></div><div class="km">১০–১৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">খানসামা</div><div class="market">খানসামা বাজার</div></div><div class="km">২০–৩০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">পার্বতীপুর</div><div class="market">পার্বতীপুর নতুন বাজার</div></div><div class="km">২০–৩০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">সৈয়দপুর</div><div class="market">সৈয়দপুর বাজার</div></div><div class="km">২৫–৩০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">দিনাজপুর সদর</div><div class="market">দিনাজপুর শহর / বড় বাজার</div></div><div class="km">৩০–৩৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">নীলফামারী সদর</div><div class="market">নীলফামারী বড় বাজার</div></div><div class="km">৩০–৪০ কিমি</div></div>
+    
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">চিরিরবন্দর</div><div class="market">চিরিরবন্দর বাজার</div></div><div class="km">১০–১৫ কিমি</div></div>
+      <div class="instruction">চিরিরবন্দর বাজার থেকে সিএনজি বা অটোতে সরাসরি চিরিরবন্দর–রানীরবন্দর লিংক রোড ধরে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">খানসামা</div><div class="market">খানসামা বাজার</div></div><div class="km">২০–৩০ কিমি</div></div>
+      <div class="instruction">খানসামা বাজার থেকে অটো বা সিএনজিতে পাকেরহাট হয়ে রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">পার্বতীপুর</div><div class="market">পার্বতীপুর নতুন বাজার/বাসস্ট্যান্ড</div></div><div class="km">২০–৩০ কিমি</div></div>
+      <div class="instruction">পার্বতীপুর নতুন বাজার/বাসস্ট্যান্ড থেকে সিএনজি বা বাস ধরে সরাসরি রানীরবন্দর নামুন, অথবা চিরিরবন্দর (ঘুঘরাতলী) নেমে রানীরবন্দরের জন্য ভ্যান বা অটোতে রানীরবন্দর পৌঁছান। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">সৈয়দপুর</div><div class="market">সৈয়দপুর বাজার</div></div><div class="km">২৫–৩০ কিমি</div></div>
+      <div class="instruction">সৈয়দপুর বাসস্ট্যান্ড বা বড় বাজার থেকে দিনাজপুরগামী যেকোনো লোকাল বাস, সিএনজি বা অটোতে চড়ে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">দিনাজপুর সদর</div><div class="market">দিনাজপুর শহর / বড় বাজার</div></div><div class="km">৩০–৩৫ কিমি</div></div>
+      <div class="instruction">দিনাজপুর বড় মাঠ বা বাইপাস থেকে সৈয়দপুর/রংপুরগামী যেকোনো বাসে চড়ে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">নীলফামারী সদর</div><div class="market">নীলফামারী বড় বাজার</div></div><div class="km">৩০–৪০ কিমি</div></div>
+      <div class="instruction">নীলফামারী সদর থেকে প্রথমে সৈয়দপুর বাসস্ট্যান্ডে আসুন। সৈয়দপুর থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে চড়ে রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
   </div>
 
   <div class="zone" data-zone>
     <div class="zone-head"><h3>৩০–৫০ কিমি</h3><span>মাঝারি</span></div>
-    <div class="row" data-row><div><div class="place">ফুলবাড়ী</div><div class="market">ফুলবাড়ী বাজার</div></div><div class="km">৩০–৪০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বিরল</div><div class="market">বিরল বাজার</div></div><div class="km">৩৫–৪৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">কাহারোল</div><div class="market">কাহারোল বাজার</div></div><div class="km">৪০–৫০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বোচাগঞ্জ</div><div class="market">সেতাবগঞ্জ বাজার</div></div><div class="km">৪০–৫০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বীরগঞ্জ</div><div class="market">বীরগঞ্জ বাজার</div></div><div class="km">৪৫–৫৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বদরগঞ্জ</div><div class="market">বদরগঞ্জ বাজার</div></div><div class="km">৪৫–৫৫ কিমি</div></div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">ফুলবাড়ী</div><div class="market">ফুলবাড়ী বাজার</div></div><div class="km">৩০–৪০ কিমি</div></div>
+      <div class="instruction">ফুলবাড়ী থেকে পার্বতীপুরগামী বাসে পার্বতীপুর এসে সেখান থেকে রানীরবন্দরের গাড়ি নিয়ে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বীরগঞ্জ</div><div class="market">বীরগঞ্জ বাজার</div></div><div class="km">৪৫–৫৫ কিমি</div></div>
+      <div class="instruction">বীরগঞ্জ বাজার থেকে বাস/সিএনজিতে দশমাইল মোড়ে এসে রংপুরগামী বাসে উঠতে পারেন, অথবা সরাসরি রংপুরগামী যেকোনো বাসে চড়ে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">কাহারোল</div><div class="market">কাহারোল বাজার</div></div><div class="km">৪০–৫০ কিমি</div></div>
+      <div class="instruction">কাহারোল বাজার থেকে বাস/সিএনজিতে দশমাইল মোড়ে এসে রংপুরগামী বাসে উঠতে পারেন, অথবা সরাসরি রংপুরগামী যেকোনো বাসে চড়ে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বিরল</div><div class="market">বিরল বাজার</div></div><div class="km">৩৫–৪৫ কিমি</div></div>
+      <div class="instruction">বিরল বাজার থেকে সিএনজি/অটোতে আগে দিনাজপুর শহর হয়ে সৈয়দপুর/রংপুরগামী যেকোনো বাসে চড়ে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বদরগঞ্জ</div><div class="market">বদরগঞ্জ বাজার</div></div><div class="km">৪৫–৫৫ কিমি</div></div>
+      <div class="instruction">বদরগঞ্জ বাজার থেকে সিএনজি বা বাসে পার্বতীপুর নতুন বাজার/বাসস্ট্যান্ড আসুন। এখান থেকে সিএনজি/বাসে সরাসরি রানীরবন্দর নামতে পারেন, অথবা চিরিরবন্দর (ঘুঘরাতলী) নেমে অটো/ভ্যানে রানীরবন্দর পৌঁছে যান। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বোচাগঞ্জ</div><div class="market">সেতাবগঞ্জ বাজার</div></div><div class="km">৪০–৫০ কিমি</div></div>
+      <div class="instruction">সেতাবগঞ্জ বাজার থেকে সিএনজি বা বাসে দিনাজপুর শহর হয়ে সৈয়দপুর/রংপুরগামী যেকোনো বাসে চড়ে সরাসরি রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
   </div>
 
   <div class="zone" data-zone>
     <div class="zone-head"><h3>৫০–৭৫ কিমি</h3><span>দূরবর্তী</span></div>
-    <div class="row" data-row><div><div class="place">কিশোরগঞ্জ</div><div class="market">কিশোরগঞ্জ বাজার</div></div><div class="km">৫০–৬৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">জলঢাকা</div><div class="market">জলঢাকা বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">ডোমার</div><div class="market">ডোমার বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">তারাগঞ্জ</div><div class="market">তারাগঞ্জ বাজার</div></div><div class="km">৫৫–৬৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">মিঠাপুকুর</div><div class="market">মিঠাপুকুর বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">রংপুর সদর</div><div class="market">রংপুর শহর / জাহাজ কোম্পানি মোড়</div></div><div class="km">৬০–৭০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বিরামপুর</div><div class="market">বিরামপুর বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">হাকিমপুর</div><div class="market">হিলি বাজার</div></div><div class="km">৭০–৮৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">নবাবগঞ্জ</div><div class="market">নবাবগঞ্জ বাজার</div></div><div class="km">৬৫–৮০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">পীরগঞ্জ</div><div class="market">পীরগঞ্জ বাজার, ঠাকুরগাঁও</div></div><div class="km">৬৫–৮০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">রাণীশংকৈল</div><div class="market">রাণীশংকৈল বাজার</div></div><div class="km">৬৫–৮০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বালিয়াডাঙ্গী</div><div class="market">বালিয়াডাঙ্গী বাজার</div></div><div class="km">৭০–৮৫ কিমি</div></div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">রংপুর সদর</div><div class="market">রংপুর শহর / জাহাজ কোম্পানি মোড়</div></div><div class="km">৬০–৭০ কিমি</div></div>
+      <div class="instruction">রংপুর জাহাজ কোম্পানি বা সিও বাজার থেকে দিনাজপুরগামী যেকোনো বাসে (যেমন: তৃপ্তি, বিআরটিসি বা লোকাল বাস) উঠে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">তারাগঞ্জ</div><div class="market">তারাগঞ্জ বাজার</div></div><div class="km">৫৫–৬৫ কিমি</div></div>
+      <div class="instruction">তারাগঞ্জ থেকে দিনাজপুরগামী যেকোনো বাসে উঠে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">কিশোরগঞ্জ</div><div class="market">কিশোরগঞ্জ বাজার</div></div><div class="km">৫০–৬৫ কিমি</div></div>
+      <div class="instruction">কিশোরগঞ্জ থেকে প্রথমে সৈয়দপুর বাসস্ট্যান্ডে আসুন। সৈয়দপুর থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে চড়ে রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">জলঢাকা</div><div class="market">জলঢাকা বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
+      <div class="instruction">জলঢাকা থেকে প্রথমে সৈয়দপুর বাসস্ট্যান্ডে আসুন। সৈয়দপুর থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে চড়ে রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">ডোমার</div><div class="market">ডোমার বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
+      <div class="instruction">ডোমার থেকে প্রথমে সৈয়দপুর বাসস্ট্যান্ডে আসুন। সৈয়দপুর থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে চড়ে রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বিরামপুর</div><div class="market">বিরামপুর বাজার</div></div><div class="km">৫৫–৭০ কিমি</div></div>
+      <div class="instruction">বিরামপুর থেকে ফুলবাড়ী হয়ে পার্বতীপুর বাসস্ট্যান্ডে আসুন। সেখান থেকে সরাসরি সিএনজি/বাসে অথবা চিরিরবন্দর (ঘুঘরাতলী) হয়ে অটো/ভ্যানে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">হাকিমপুর</div><div class="market">হিলি বাজার</div></div><div class="km">৭০–৮৫ কিমি</div></div>
+      <div class="instruction">হিলি থেকে ফুলবাড়ী হয়ে পার্বতীপুর বাসস্ট্যান্ডে আসুন। সেখান থেকে সরাসরি সিএনজি/বাসে অথবা চিরিরবন্দর (ঘুঘরাতলী) হয়ে অটো/ভ্যানে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">নবাবগঞ্জ</div><div class="market">নবাবগঞ্জ বাজার</div></div><div class="km">৬৫–৮০ কিমি</div></div>
+      <div class="instruction">নবাবগঞ্জ থেকে ফুলবাড়ী হয়ে পার্বতীপুর বাসস্ট্যান্ডে আসুন। সেখান থেকে সরাসরি সিএনজি/বাসে অথবা চিরিরবন্দর (ঘুঘরাতলী) হয়ে অটো/ভ্যানে রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+    
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">ঠাকুরগাঁও সদর</div><div class="market">ঠাকুরগাঁও শহর</div></div><div class="km">৮০–৯৫ কিমি</div></div>
+      <div class="instruction">ঠাকুরগাঁও থেকে রংপুরগামী বাসে উঠলে সরাসরি রানীরবন্দর নামুন। (অথবা দিনাজপুরগামী বাসে উঠলে দশমাইল মোড়ে নেমে রংপুরগামী বাসে রানীরবন্দর চলে আসুন)। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">পঞ্চগড়</div><div class="market">পঞ্চগড় শহর</div></div><div class="km">১০০+ কিমি</div></div>
+      <div class="instruction">পঞ্চগড় থেকে রংপুরগামী বাসে উঠলে সরাসরি রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
   </div>
 
   <div class="zone" data-zone>
     <div class="zone-head"><h3>৭৫–১০০+ কিমি</h3><span>বর্ধিত</span></div>
-    <div class="row" data-row><div><div class="place">পীরগাছা</div><div class="market">পীরগাছা বাজার</div></div><div class="km">৭৫–৯০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">কাউনিয়া</div><div class="market">কাউনিয়া বাজার</div></div><div class="km">৭৫–৯০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">গংগাচড়া</div><div class="market">গংগাচড়া বাজার</div></div><div class="km">৭৫–৯০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">পীরগঞ্জ</div><div class="market">পীরগঞ্জ বাজার, রংপুর</div></div><div class="km">৭৫–৯০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">গোবিন্দগঞ্জ</div><div class="market">গোবিন্দগঞ্জ বাজার</div></div><div class="km">৮৫–১০০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">ঠাকুরগাঁও সদর</div><div class="market">ঠাকুরগাঁও শহর</div></div><div class="km">৮০–৯৫ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">দেবীগঞ্জ</div><div class="market">দেবীগঞ্জ বাজার</div></div><div class="km">৭৫–৯০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">বোদা</div><div class="market">বোদা বাজার</div></div><div class="km">৮৫–১০০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">আদিতমারী</div><div class="market">আদিতমারী বাজার</div></div><div class="km">৯০–১০০ কিমি</div></div>
-    <div class="row" data-row><div><div class="place">লালমনিরহাট সদর</div><div class="market">লালমনিরহাট শহর</div></div><div class="km">৯০–১০৫ কিমি</div></div>
+    
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">দেবীগঞ্জ</div><div class="market">দেবীগঞ্জ বাজার</div></div><div class="km">৭৫–৯০ কিমি</div></div>
+      <div class="instruction">দেবীগঞ্জ থেকে রংপুরগামী বাসে উঠলে সরাসরি রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">বোদা</div><div class="market">বোদা বাজার</div></div><div class="km">৮৫–১০০ কিমি</div></div>
+      <div class="instruction">বোদা থেকে রংপুরগামী বাসে উঠলে সরাসরি রানীরবন্দর নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">গাইবান্ধা</div><div class="market">গাইবান্ধা শহর</div></div><div class="km">৯০–১০৫ কিমি</div></div>
+      <div class="instruction">গাইবান্ধা থেকে যেকোনো দূরপাল্লার বাসে চেপে প্রথমে রংপুর মেডিকেল মোড় বা টার্মিনালে নামুন। সেখান থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে উঠে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">লালমনিরহাট সদর</div><div class="market">লালমনিরহাট শহর</div></div><div class="km">৯০–১০৫ কিমি</div></div>
+      <div class="instruction">লালমনিরহাট থেকে যেকোনো বাসে চেপে প্রথমে রংপুর মেডিকেল মোড় বা টার্মিনালে নামুন। সেখান থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে উঠে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
+
+    <div class="row" data-row>
+      <div class="row-top"><div><div class="place">কুড়িগ্রাম</div><div class="market">কুড়িগ্রাম শহর</div></div><div class="km">১০০+ কিমি</div></div>
+      <div class="instruction">কুড়িগ্রাম থেকে যেকোনো বাসে চেপে প্রথমে রংপুর মেডিকেল মোড় বা টার্মিনালে নামুন। সেখান থেকে দিনাজপুর, ঠাকুরগাঁও বা পঞ্চগড়গামী যেকোনো বাসে উঠে সরাসরি রানীরবন্দর মোড়ে নামুন। এরপর রানীরবন্দর থেকে অটো বা ভ্যানে সরাসরি মন্দিরে আসতে পারবেন, সময় লাগবে ১০ মিনিট।</div>
+    </div>
   </div>
 </div>
 
@@ -779,7 +921,9 @@ details[open] summary .plus{transform:rotate(45deg)}
 const search = document.getElementById("search");
 const zones = [...document.querySelectorAll("[data-zone]")];
 const noResults = document.getElementById("noResults");
+const rows = document.querySelectorAll("[data-row]");
 
+// Handle search filtering
 search.addEventListener("input", () => {
   const q = search.value.trim().toLowerCase();
   let anyVisible = false;
@@ -789,13 +933,34 @@ search.addEventListener("input", () => {
     zone.querySelectorAll("[data-row]").forEach(row => {
       const match = row.innerText.toLowerCase().includes(q);
       row.style.display = match ? "flex" : "none";
-      if (match) visible++;
+      
+      if (q && match) {
+        row.classList.add('active'); // Auto-expand on search
+        visible++;
+      } else {
+        row.classList.remove('active'); // Collapse if no search or no match
+      }
     });
-    zone.style.display = visible ? "" : "none";
-    if (visible) anyVisible = true;
+    zone.style.display = visible || (!q && zone.querySelectorAll("[data-row]").length) ? "" : "none";
+    if (visible || !q) anyVisible = true;
   });
 
   noResults.style.display = (q && !anyVisible) ? "block" : "none";
+});
+
+// Handle click to expand instructions
+rows.forEach(row => {
+  row.addEventListener("click", () => {
+    const isActive = row.classList.contains('active');
+    // Optional: close other rows
+    // rows.forEach(r => r.classList.remove('active'));
+    
+    if (!isActive) {
+      row.classList.add('active');
+    } else {
+      row.classList.remove('active');
+    }
+  });
 });
 </script>
 
