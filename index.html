@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -31,6 +32,30 @@ body{
 }
 a{text-decoration:none;color:inherit}
 
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes ringIn{
+  from{opacity:0;transform:scale(.82)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes wipeIn{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(199,155,59,.28)}
+  50%{box-shadow:0 0 0 9px rgba(199,155,59,0)}
+}
+
+@media(prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+
 /* ============ TOP: identity + the two things people need ============ */
 
 .top{
@@ -61,6 +86,8 @@ a{text-decoration:none;color:inherit}
   background-position:0 0;
   background-size:13px 13px;
   background-repeat:repeat-x;
+  transform-origin:left;
+  animation:wipeIn .5s ease .38s both;
 }
 
 .top-row{
@@ -76,6 +103,8 @@ a{text-decoration:none;color:inherit}
   font-size:clamp(26px,8vw,36px);
   line-height:1.18;
   letter-spacing:-.01em;
+  opacity:0;
+  animation:fadeUp .6s ease .05s both;
 }
 
 .top-title small{
@@ -89,21 +118,64 @@ a{text-decoration:none;color:inherit}
   letter-spacing:0;
 }
 
-.badge{
+.top-title p.invite-line{
+  font-family:"Hind Siliguri",sans-serif;
+  font-weight:400;
+  font-size:13px;
+  line-height:1.8;
+  color:rgba(247,239,217,.78);
+  margin-top:14px;
+  max-width:46ch;
+  opacity:0;
+  animation:fadeUp .6s ease .18s both;
+}
+
+.badge-ring{
   flex-shrink:0;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  border:1.5px solid var(--gold);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  opacity:0;
+  animation:ringIn .55s ease .1s both, glowPulse 3.2s ease-in-out 1.4s infinite;
+}
+
+.badge-ring::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px solid rgba(199,155,59,.45);
+  border-radius:50%;
+}
+
+.badge-ring .num{
   font-family:"Tiro Bangla",serif;
-  font-style:italic;
+  font-weight:700;
+  font-size:30px;
   color:var(--gold);
-  font-size:15px;
-  text-align:right;
-  border-top:1px solid rgba(199,155,59,.6);
-  padding-top:5px;
-  white-space:nowrap;
+  line-height:1;
+}
+
+.badge-ring .cap{
+  font-family:"Hind Siliguri",sans-serif;
+  font-size:8.5px;
+  color:rgba(247,239,217,.75);
+  line-height:1.35;
+  margin-top:5px;
+  max-width:66px;
 }
 
 .actions{
   display:flex;
   margin-top:20px;
+  opacity:0;
+  animation:fadeUp .6s ease .28s both;
 }
 
 .action-btn{
@@ -118,9 +190,84 @@ a{text-decoration:none;color:inherit}
   padding:14px 22px;
   border-radius:10px;
   text-align:center;
+  transition:transform .15s ease, box-shadow .15s ease;
 }
 
+.action-btn:active{transform:scale(.97)}
+
+.action-btn:hover{box-shadow:0 6px 16px rgba(0,0,0,.18)}
+
 .action-btn .icon{width:20px;height:20px;flex-shrink:0}
+
+/* ============ HIGHLIGHTS: festive strip ============ */
+
+.highlights{
+  display:flex;
+  gap:12px;
+  padding:22px 18px 6px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+
+.highlights::-webkit-scrollbar{display:none}
+
+.highlight{
+  flex:0 0 auto;
+  width:64%;
+  max-width:210px;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  padding:16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  opacity:0;
+  animation:fadeUp .5s ease both;
+}
+
+.highlight:nth-child(1){animation-delay:.46s}
+.highlight:nth-child(2){animation-delay:.53s}
+.highlight:nth-child(3){animation-delay:.6s}
+.highlight:nth-child(4){animation-delay:.67s}
+
+.highlight-icon{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1.3px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--maroon);
+  flex-shrink:0;
+}
+
+.highlight-icon svg{width:17px;height:17px}
+
+.highlight h4{
+  font-family:"Tiro Bangla",serif;
+  font-size:13.5px;
+  font-weight:700;
+  color:var(--maroon);
+}
+
+.highlight p{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.swipe-hint{
+  font-size:10.5px;
+  color:var(--muted);
+  padding:0 18px 2px;
+  opacity:.75;
+}
 
 /* ============ FIND YOUR DISTANCE ============ */
 
@@ -162,6 +309,11 @@ a{text-decoration:none;color:inherit}
   font-size:16px;
   outline:none;
   color:var(--ink);
+  transition:box-shadow .2s ease;
+}
+
+.search:focus{
+  box-shadow:0 0 0 4px rgba(199,155,59,.22);
 }
 
 .search::placeholder{color:#9a8d7d}
@@ -215,6 +367,12 @@ a{text-decoration:none;color:inherit}
   gap:12px;
   padding:12px 2px;
   border-bottom:1px solid var(--line);
+  transition:background-color .15s ease, padding-left .15s ease;
+}
+
+.row:hover{
+  background:rgba(199,155,59,.07);
+  padding-left:6px;
 }
 
 .row .place{
@@ -259,9 +417,12 @@ summary{
   font-family:"Tiro Bangla",serif;
   font-weight:700;
   font-size:16px;
+  transition:color .15s ease;
 }
 
 summary::-webkit-details-marker{display:none}
+
+details[open] summary{color:var(--maroon)}
 
 summary .plus{
   font-size:20px;
@@ -324,12 +485,40 @@ details[open] summary .plus{transform:rotate(45deg)}
   .top-motif{width:280px;height:280px;right:-50px;top:-56px}
   .top-title{font-size:44px}
   .top-title small{font-size:16px;margin-top:9px}
-  .badge{font-size:17px}
   .action-btn{padding:15px 28px;font-size:15px}
 
-  .find,.results,.more{padding-left:56px;padding-right:56px}
+  .swipe-hint{display:none}
+
+  .find,.results,.more,.highlights{padding-left:56px;padding-right:56px}
   .find{padding-top:36px}
   .find h2{font-size:24px}
+
+  .highlights{
+    padding-top:38px;
+    padding-bottom:6px;
+    overflow-x:visible;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+  .highlight{
+    width:auto;
+    max-width:none;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 18px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .highlight:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(33,27,24,.08);
+  }
+  .highlight-icon{width:46px;height:46px}
+  .highlight-icon svg{width:21px;height:21px}
+  .top-title p.invite-line{font-size:15px;max-width:52ch}
+  .badge-ring{width:128px;height:128px}
+  .badge-ring .num{font-size:40px}
+  .badge-ring .cap{font-size:10.5px;max-width:82px}
 
   .results{
     display:grid;
@@ -379,8 +568,12 @@ details[open] summary .plus{transform:rotate(45deg)}
     <div class="top-title">
       গছাহার মাস্টার পাড়া<br>
       <small>সার্বজনীন দুর্গা মন্দির</small>
+      <p class="invite-line">আমরা পরম আনন্দের সাথে আপনাকে ও আপনার পরিবারকে এই ঐতিহাসিক শতবর্ষ উদ্‌যাপনে সাদরে আমন্ত্রণ জানাচ্ছি।</p>
     </div>
-    <div class="badge">১০০ বছর</div>
+    <div class="badge-ring">
+      <span class="num">১০০</span>
+      <span class="cap">তম শারদীয় দুর্গোৎসব ২০২৬</span>
+    </div>
   </div>
 
   <div class="actions">
@@ -392,6 +585,53 @@ details[open] summary .plus{transform:rotate(45deg)}
 </div>
 
 <div class="toran"></div>
+
+<!-- HIGHLIGHTS -->
+<div class="highlights">
+
+  <div class="highlight">
+    <div class="highlight-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 9v1h18V9L12 3Z"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+    </div>
+    <div>
+      <h4>১০০ বছরের অগাধ ঐতিহ্য</h4>
+      <p>১৯২৬ সাল থেকে অবিরাম পথচলা</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M14.5 14.3c2 .3 3.5 1.9 3.5 4.7"/></svg>
+    </div>
+    <div>
+      <h4>সম্প্রীতি আমাদের শক্তি</h4>
+      <p>একতায়, এক মনে, একটি পরিবার</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2.5-6-5.5-6-9a6 6 0 0 1 12 0c0 3.5-2 6.5-6 9Z"/><path d="M12 12v9"/></svg>
+    </div>
+    <div>
+      <h4>সংস্কৃতি আমাদের প্রাণ</h4>
+      <p>ঐতিহ্য ও সংস্কৃতির মিলনস্থল</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v2.4M12 18.6V21M4.5 12H2M22 12h-2.5M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18"/></svg>
+    </div>
+    <div>
+      <h4>আগামীর পথে</h4>
+      <p>নতুন স্বপ্ন, নতুন আশা, উজ্জ্বলতার অঙ্গীকার</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="swipe-hint">← সোয়াইপ করে বাকিগুলো দেখুন</div>
 
 <!-- FIND DISTANCE -->
 <div class="find">
